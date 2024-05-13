@@ -1,0 +1,89 @@
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName = 'Mark';
+
+
+--Ejercicios para practicar SQL con adventure works
+
+--Traer el FirstName y LastName de Person.Person cuando el FirstName sea Mark.
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName = 'Mark';
+
+
+--¿Cuántas filas hay dentro de Person.Person?
+select count(*) as total_filas
+from person.person
+
+
+--Traer las 100 primeras filas de Production.Product donde el ListPrice no es 0
+select count (100) as 'primeras 100 filas'
+from production.product 
+where ListPrice >0
+
+--Traer las 100 primeras filas de Production.Product donde el ListPrice no es 0
+SELECT TOP 100 *
+FROM Production.Product
+WHERE ListPrice <> 0;
+
+
+
+--Seleccionar el cliente más reciente en la tabla Sales.Customer:
+SELECT TOP 1 *
+FROM Sales.Customer
+ORDER BY ModifiedDate DESC
+
+--Seleccionar los 3 departamentos con más empleados:
+
+SELECT TOP 3 DepartmentoID, COUNT(*) AS cantidad_empleados
+FROM HumanResources.Employee
+GROUP BY DepartmentID
+ORDER BY COUNT(*) DESC;
+
+
+--Traer todas las filas de de HumanResources.vEmployee donde los apellidos de los empleados empiecen con una letra inferior a “D”
+
+select  count (*) as apellidos_inferior_D
+from HumanResources.vEmployee
+where LEFT (lastname, 1) < 'D';
+
+--¿Cuál es el promedio de StandardCost para cada producto donde StandardCost es mayor a $0.00? production product
+
+SELECT ProductID, AVG(StandardCost) AS promedio_StandardCost
+FROM Production.Product
+WHERE StandardCost > 0.00
+GROUP BY ProductID;
+
+--En la tabla Person.Person ¿cuántas personas están asociadas con cada tipo de persona (PersonType)?
+
+SELECT PersonType, COUNT(*) AS cantidad_personas
+FROM Person.Person
+GROUP BY PersonType;
+
+--Traer todas las filas y columnas de Person.StateProvince donde el CountryRegionCode sea CA.
+SELECT *
+FROM Person.StateProvince
+WHERE CountryRegionCode = 'CA';
+
+--¿Cuántos productos en Production.Product hay que son rojos (red) y cuántos que son negros (black)?
+
+SELECT Color, COUNT(*) AS cantidad_productos
+FROM Production.Product
+WHERE Color IN ('red', 'black')
+GROUP BY Color;
+
+
+
+--¿Cuál es el valor promedio de Freight por cada venta? (Sales.SalesOrderHeader) donde la venta se dio en el TerriotryID 4?
+
+SELECT AVG(Freight) AS promedio_freight_por_venta
+FROM Sales.SalesOrderHeader
+WHERE TerritoryID = 4;
+
+
+--Traer a todos los clientes de Sales.vIndividualCustomer cuyo apellido sea Lopez, Martin o Wood, y sus nombres empiecen con cualquier letra entre la C y la L
+
+select *
+from sales.vIndividualCustomer
+where LastName in ('Lopez', 'martin', 'wood')
+and left (firstname, 1) between 'c' and 'L';
